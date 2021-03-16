@@ -1,0 +1,60 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 200
+Job counts:
+	count	jobs
+	1	all
+	3	varscan
+	4
+Select jobs to execute...
+
+[Mon Mar 15 20:42:44 2021]
+rule varscan:
+    input: /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_D1.bam, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam
+    output: SJHGG010160/SJHGG010160_D1.vcf
+    jobid: 3
+    wildcards: patient=SJHGG010160, sample=SJHGG010160_D1
+    resources: mem_mb=3000
+
+Submitted job 3 with external jobid '3530491'.
+
+[Mon Mar 15 20:42:45 2021]
+rule varscan:
+    input: /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_A1.bam, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam
+    output: SJHGG010160/SJHGG010160_A1.vcf
+    jobid: 1
+    wildcards: patient=SJHGG010160, sample=SJHGG010160_A1
+    resources: mem_mb=3000
+
+Submitted job 1 with external jobid '3530492'.
+
+[Mon Mar 15 20:42:45 2021]
+rule varscan:
+    input: /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_A2.bam, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam
+    output: SJHGG010160/SJHGG010160_A2.vcf
+    jobid: 2
+    wildcards: patient=SJHGG010160, sample=SJHGG010160_A2
+    resources: mem_mb=3000
+
+Submitted job 2 with external jobid '3530493'.
+Waiting at most 60 seconds for missing files.
+[Mon Mar 15 20:43:14 2021]
+Finished job 3.
+1 of 4 steps (25%) done
+[Mon Mar 15 20:43:15 2021]
+Finished job 1.
+2 of 4 steps (50%) done
+[Mon Mar 15 20:43:15 2021]
+Finished job 2.
+3 of 4 steps (75%) done
+Select jobs to execute...
+
+[Mon Mar 15 20:43:15 2021]
+localrule all:
+    input: SJHGG010160/SJHGG010160_A1.vcf, SJHGG010160/SJHGG010160_A2.vcf, SJHGG010160/SJHGG010160_D1.vcf
+    jobid: 0
+
+[Mon Mar 15 20:43:15 2021]
+Finished job 0.
+4 of 4 steps (100%) done
+Complete log: /n/fs/ragr-research/users/bjarnold/MetastaticEvol/.snakemake/log/2021-03-15T204242.607819.snakemake.log

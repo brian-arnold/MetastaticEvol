@@ -1,0 +1,12 @@
+
+# reference genome
+reference: /n/fs/ragr-data/datasets/ref-genomes/GRCh37_NCBI/GRCh37.p13.fa 
+
+samples: samples.txt
+
+resources:
+    varscan:
+        memory: 30000 # Allocated memory (in MB)
+
+
+
