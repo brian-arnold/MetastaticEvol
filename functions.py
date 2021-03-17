@@ -40,7 +40,7 @@ def make_all_input():
                 info = l.strip().split() 
                 if info[1] == "tumor":
                     sample = get_sample_name( info[2] )
-                    path = os.path.join( info[0], f"{sample}.vcf")
+                    path = os.path.join( "varscan", info[0], f"{sample}.snp.vcf")
                     outfiles.append( path ) 
         return outfiles
 
