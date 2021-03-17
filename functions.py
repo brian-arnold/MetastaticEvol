@@ -49,12 +49,12 @@ def get_sample_name(x):
     sample = sample.replace(".bam", "") 
     return sample
         
-def get_tumor_in(wildcards):
+def tumor_bam(wildcards):
     # tumors dict defined below
     tumor_in = tumors[wildcards.patient][wildcards.sample]
     return tumor_in
 
-def get_normal_in(wildcards):
+def normal_bam(wildcards):
     # normals dict defined below
     normal_in = normals[wildcards.patient]
     return normal_in
