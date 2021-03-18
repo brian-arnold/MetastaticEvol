@@ -8,8 +8,9 @@
 #SBATCH --mem-per-cpu=4G         # memory per cpu-core (4G is default)
 #SBATCH --time 0-03:00:00        # DAYS-HOURS:MINUTES:SECONDS
 
-source /u/bjarnold/miniconda3/etc/profile.d/conda.sh
+source /n/fs/ragr-research/users/bjarnold/miniconda3/etc/profile.d/conda.sh
 conda activate snakemake
-snakemake --profile ./profiles/ionic
+snakemake -p --profile ./profiles/ionic
+#snakemake -n -p 
 
 

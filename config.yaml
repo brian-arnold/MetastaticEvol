@@ -8,5 +8,13 @@ resources:
     varscan:
         memory: 30000 # Allocated memory (in MB)
 
-
+hatchet:
+    ref_vers: hg19
+    chr_notation: false
+    xdir: hatchet
+    minreads: 8 #Use 8 for WGS with >30x and 20 for WES with ~100x
+    maxreads: 300 #Use 300 for WGS with >30x and Use 1000 for WES with ~100x
+    bin: 50kb
+    phase: None
+    block: 50kb
 
