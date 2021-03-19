@@ -103,5 +103,20 @@ rule hatchet_comBBo:
         "-B {input.baf_tumor} -t {input.rdr_total} -p {params.phase} -l {params.block} -e {params.random} > {output.bulk_bb} "
 
 
+rule hatchet_cluBB:
+    input:
+        bulk_bb = config['hatchet']['xdir'] + "/{patient}/bb/bulk.bb"
+    output:
+        bulk_seg = config['hatchet']['xdir'] + "/{patient}/bbc/bulk.seg",
+        bulk_bbc = config['hatchet']['xdir'] + "/{patient}/bbc/bulk.bbc"
+    params:
+        random = random.randint(0,32767)
+    resources: 
+        mem_mb = lambda wildcards, attempt: attempt * 30000
+    threads: 1
+    conda:
+        "../envs/hatchet.yml"
+    shell:
+        "python3 -m hatchet cluBB {input.bulk_bb} -o {output.bulk_seg} -O {output.bulk_bbc} -e {params.random} -tB 0.04 -tR 0.15 -d 0.08"
 
 

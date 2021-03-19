@@ -4,32 +4,31 @@ Provided cluster nodes: 200
 Job counts:
 	count	jobs
 	1	all
-	1	hatchet_comBBo
+	1	hatchet_cluBB
 	2
 Select jobs to execute...
 
-[Fri Mar 19 11:41:08 2021]
-rule hatchet_comBBo:
-    input: hatchet/SJHGG010160/rdr/normal.1bed, hatchet/SJHGG010160/rdr/tumor.1bed, hatchet/SJHGG010160/rdr/total.tsv, hatchet/SJHGG010160/baf/tumor.1bed
-    output: hatchet/SJHGG010160/bb/bulk.bb
+[Fri Mar 19 12:09:18 2021]
+rule hatchet_cluBB:
+    input: hatchet/SJHGG010160/bb/bulk.bb
+    output: hatchet/SJHGG010160/bbc/bulk.seg, hatchet/SJHGG010160/bbc/bulk.bbc
     jobid: 1
     wildcards: patient=SJHGG010160
     resources: mem_mb=30000
 
-python3 -m hatchet comBBo -c hatchet/SJHGG010160/rdr/normal.1bed -C hatchet/SJHGG010160/rdr/tumor.1bed -B hatchet/SJHGG010160/baf/tumor.1bed -t hatchet/SJHGG010160/rdr/total.tsv -p None -l 50kb -e 3462 > hatchet/SJHGG010160/bb/bulk.bb 
-Submitted job 1 with external jobid '3830592'.
-Waiting at most 60 seconds for missing files.
-[Fri Mar 19 11:41:39 2021]
+python3 -m hatchet cluBB hatchet/SJHGG010160/bb/bulk.bb -o hatchet/SJHGG010160/bbc/bulk.seg -O hatchet/SJHGG010160/bbc/bulk.bbc -e 22119 -tB 0.04 -tR 0.15 -d 0.08
+Submitted job 1 with external jobid '3833031'.
+[Fri Mar 19 12:40:55 2021]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Fri Mar 19 11:41:39 2021]
+[Fri Mar 19 12:40:55 2021]
 localrule all:
-    input: hatchet/SJHGG010160/bb/bulk.bb
+    input: hatchet/SJHGG010160/bbc/bulk.seg, hatchet/SJHGG010160/bbc/bulk.bbc
     jobid: 0
 
-[Fri Mar 19 11:41:39 2021]
+[Fri Mar 19 12:40:55 2021]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /n/fs/ragr-research/users/bjarnold/MetastaticEvol/.snakemake/log/2021-03-19T114107.658402.snakemake.log
+Complete log: /n/fs/ragr-research/users/bjarnold/MetastaticEvol/.snakemake/log/2021-03-19T120917.662210.snakemake.log

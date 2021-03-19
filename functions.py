@@ -42,9 +42,15 @@ def make_all_input_hatchet():
                 if info[1] == "tumor":
                     patients.add( info[0] )
 
+        # use for cluBB
+        for p in patients:
+            paths.append( os.path.join( config["hatchet"]["xdir"], p, "bbc/bulk.seg") )
+            paths.append( os.path.join( config["hatchet"]["xdir"], p, "bbc/bulk.bbc") )
+        """
         # use for comBBo
         for p in patients:
             paths.append( os.path.join( config["hatchet"]["xdir"], p, "bb/bulk.bb") )
+        """
         """
         # use for deBAF
         for p in patients:
