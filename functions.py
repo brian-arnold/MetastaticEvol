@@ -45,9 +45,9 @@ def make_all_input_hatchet():
         # use for SNPCaller stop
         prefix = "chr" if config['hatchet']['chr_notation'] == True else ""
         for p in patients:
-            paths.append( config['hatchet']['xdir'] + f"/{p}/baf/bafs.log" )
-            #for i in range(1,23):
-            #    paths.append( config['hatchet']['xdir'] + f"{p}/snps/{prefix}{i}.vcf.gz" )
+            #paths.append( config['hatchet']['xdir'] + f"/{p}/baf/bafs.log" )
+            for i in range(1,23):
+                paths.append( config['hatchet']['xdir'] + f"/{p}/snps/{prefix}{i}.vcf.gz" )
         """
         # use for binBAM stop
         for p in patients:
@@ -101,11 +101,11 @@ def get_names_hatchet(wildcards):
     names = ["Normal"] + tumors_in
     return names 
 
-def hatchet_SNPCaller_snps(wildcards):
+def hatchet_SNPCaller_snps(p):
     prefix = "chr" if config['hatchet']['chr_notation'] == True else ""
     vcfs = []
     for i in range(1,23):
-        vcfs.append( config['hatchet']['xdir'] + f"{wildcards.patient}/snps/{prefix}{i}.vcf.gz" )
+        vcfs.append( config['hatchet']['xdir'] + f"/{p}/snps/{prefix}{i}.vcf.gz" )
     #vcfs = [f"{prefix}{i}.vcf.gz" for i in range(1,23)]
     return vcfs
 
