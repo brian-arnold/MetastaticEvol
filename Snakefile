@@ -1,6 +1,7 @@
 #
 
 from functions import *
+import random
 configfile: "config.yaml"
 
 rule all:

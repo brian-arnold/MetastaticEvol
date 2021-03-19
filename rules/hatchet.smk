@@ -10,10 +10,6 @@ rule hatchet_binBAM:
         tumor_bed = config['hatchet']['xdir'] + "/{patient}/rdr/tumor.1bed",
         total = config['hatchet']['xdir'] + "/{patient}/rdr/total.tsv",
         bins_log = config['hatchet']['xdir'] + "/{patient}/rdr/bins.log"
-        #norm_bed =  "{path}/{patient}/rdr/normal.1bed",
-        #tumor_bed = "{path}/{patient}/rdr/tumor.1bed",
-        #total = "{path}/{patient}/rdr/total.tsv",
-        #bins_log = "{path}/{patient}/bins.log"
     params:
         tumors_string = get_tumors_hatchet, # space separated list of bam files
         all_names = get_names_hatchet, # space separated list of Normal and tumors
@@ -25,7 +21,6 @@ rule hatchet_binBAM:
         "../envs/hatchet.yml"
     shell:
         #"export GRB_LICENSE_FILE=\"/u/bjarnold//gurobi.lic\"\n"
-        #"cd {input.xdir}\n"
         "python3 -m hatchet binBAM "
         "-N {input.normal} -T {params.tumors_string} -S {params.all_names} -b {params.bin} -g {input.ref} "
         "-j {threads} -O {output.norm_bed} -o {output.tumor_bed} -t {output.total} "
@@ -37,10 +32,8 @@ rule hatchet_SNPCaller:
         normal = normal_bam,
         ref = config['reference']
     output: 
-        hatchet_SNPCaller_snps( "{patient}" ), # can't use functions as output? at least ones like input based on wilcards
+        hatchet_SNPCaller_snps( "{patient}" ), # can't use functions as output? at least ones like input functions based on wilcards
         bafs_log = config['hatchet']['xdir'] + "/{patient}/baf/bafs.log"
-        #bafs_log = config['hatchet']['xdir'] + "/{patient}/baf/bafs.log"
-        #snps = directory(config['hatchet']['xdir'] + "/{patient}/snps"),
     params:
         minreads = config['hatchet']['minreads'],
         maxreads = config['hatchet']['maxreads'],
@@ -82,8 +75,33 @@ rule hatchet_deBAF:
         "../envs/hatchet.yml"
     shell:
         #"export GRB_LICENSE_FILE=\"/u/bjarnold//gurobi.lic\"\n"
-        #"cd {input.xdir}\n"
         "python3 -m hatchet deBAF "
         "-N {input.normal} -T {params.tumors_string} -S {params.all_names} -r {input.ref} "
         "-j {threads} -c {params.minreads} -C {params.maxreads} -L {input.snps} "
         "-O {output.norm_bed} -o {output.tumor_bed} |& tee {output.bafs_log}"
+
+
+rule hatchet_comBBo:
+    input:
+        rdr_norm = config['hatchet']['xdir'] + "/{patient}/rdr/normal.1bed",
+        rdr_tumor = config['hatchet']['xdir'] + "/{patient}/rdr/tumor.1bed",
+        rdr_total = config['hatchet']['xdir'] + "/{patient}/rdr/total.tsv",
+        baf_tumor = config['hatchet']['xdir'] + "/{patient}/baf/tumor.1bed"
+    output:
+        bulk_bb = config['hatchet']['xdir'] + "/{patient}/bb/bulk.bb"
+    params:
+        phase = config['hatchet']['phase'],
+        block = config['hatchet']['block'],
+        random = random.randint(0,32767)
+    resources: 
+        mem_mb = lambda wildcards, attempt: attempt * 30000
+    threads: 1
+    conda:
+        "../envs/hatchet.yml"
+    shell:
+        "python3 -m hatchet comBBo -c {input.rdr_norm} -C {input.rdr_tumor} "
+        "-B {input.baf_tumor} -t {input.rdr_total} -p {params.phase} -l {params.block} -e {params.random} > {output.bulk_bb} "
+
+
+
+
