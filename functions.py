@@ -42,12 +42,19 @@ def make_all_input_hatchet():
                 if info[1] == "tumor":
                     patients.add( info[0] )
 
+        # use for deBAF
+        for p in patients:
+            paths.append( os.path.join( config["hatchet"]["xdir"], p, "baf/tumor.1bed") )
+            paths.append( os.path.join( config["hatchet"]["xdir"], p, "baf/normal.1bed") )
+        """
         # use for SNPCaller stop
         prefix = "chr" if config['hatchet']['chr_notation'] == True else ""
         for p in patients:
             #paths.append( config['hatchet']['xdir'] + f"/{p}/baf/bafs.log" )
             for i in range(1,23):
                 paths.append( config['hatchet']['xdir'] + f"/{p}/snps/{prefix}{i}.vcf.gz" )
+        """
+
         """
         # use for binBAM stop
         for p in patients:

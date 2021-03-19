@@ -4,20 +4,32 @@ Provided cluster nodes: 200
 Job counts:
 	count	jobs
 	1	all
-	1	hatchet_SNPCaller
+	1	hatchet_deBAF
 	2
 Select jobs to execute...
 
-[Thu Mar 18 22:12:48 2021]
-rule hatchet_SNPCaller:
-    input: /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam, /n/fs/ragr-data/datasets/ref-genomes/GRCh37_NCBI/GRCh37.p13.fa
-    output: hatchet/SJHGG010160/snps/1.vcf.gz, hatchet/SJHGG010160/snps/2.vcf.gz, hatchet/SJHGG010160/snps/3.vcf.gz, hatchet/SJHGG010160/snps/4.vcf.gz, hatchet/SJHGG010160/snps/5.vcf.gz, hatchet/SJHGG010160/snps/6.vcf.gz, hatchet/SJHGG010160/snps/7.vcf.gz, hatchet/SJHGG010160/snps/8.vcf.gz, hatchet/SJHGG010160/snps/9.vcf.gz, hatchet/SJHGG010160/snps/10.vcf.gz, hatchet/SJHGG010160/snps/11.vcf.gz, hatchet/SJHGG010160/snps/12.vcf.gz, hatchet/SJHGG010160/snps/13.vcf.gz, hatchet/SJHGG010160/snps/14.vcf.gz, hatchet/SJHGG010160/snps/15.vcf.gz, hatchet/SJHGG010160/snps/16.vcf.gz, hatchet/SJHGG010160/snps/17.vcf.gz, hatchet/SJHGG010160/snps/18.vcf.gz, hatchet/SJHGG010160/snps/19.vcf.gz, hatchet/SJHGG010160/snps/20.vcf.gz, hatchet/SJHGG010160/snps/21.vcf.gz, hatchet/SJHGG010160/snps/22.vcf.gz, hatchet/SJHGG010160/baf/bafs.log
+[Thu Mar 18 23:22:20 2021]
+rule hatchet_deBAF:
+    input: hatchet/SJHGG010160/snps/1.vcf.gz, hatchet/SJHGG010160/snps/2.vcf.gz, hatchet/SJHGG010160/snps/3.vcf.gz, hatchet/SJHGG010160/snps/4.vcf.gz, hatchet/SJHGG010160/snps/5.vcf.gz, hatchet/SJHGG010160/snps/6.vcf.gz, hatchet/SJHGG010160/snps/7.vcf.gz, hatchet/SJHGG010160/snps/8.vcf.gz, hatchet/SJHGG010160/snps/9.vcf.gz, hatchet/SJHGG010160/snps/10.vcf.gz, hatchet/SJHGG010160/snps/11.vcf.gz, hatchet/SJHGG010160/snps/12.vcf.gz, hatchet/SJHGG010160/snps/13.vcf.gz, hatchet/SJHGG010160/snps/14.vcf.gz, hatchet/SJHGG010160/snps/15.vcf.gz, hatchet/SJHGG010160/snps/16.vcf.gz, hatchet/SJHGG010160/snps/17.vcf.gz, hatchet/SJHGG010160/snps/18.vcf.gz, hatchet/SJHGG010160/snps/19.vcf.gz, hatchet/SJHGG010160/snps/20.vcf.gz, hatchet/SJHGG010160/snps/21.vcf.gz, hatchet/SJHGG010160/snps/22.vcf.gz, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_A1.bam, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_A2.bam, /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_D1.bam, /n/fs/ragr-data/datasets/ref-genomes/GRCh37_NCBI/GRCh37.p13.fa
+    output: hatchet/SJHGG010160/baf/normal.1bed, hatchet/SJHGG010160/baf/tumor.1bed, hatchet/SJHGG010160/baf/bafs.log
     jobid: 1
     wildcards: patient=SJHGG010160
     threads: 8
     resources: mem_mb=30000
 
-mkdir -p hatchet/SJHGG010160/snps
-python3 -m hatchet SNPCaller -N /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam -r /n/fs/ragr-data/datasets/ref-genomes/GRCh37_NCBI/GRCh37.p13.fa -j 8 -c 8 -C 300 -R https://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/00-All.vcf.gz -o hatchet/SJHGG010160/snps |& tee hatchet/SJHGG010160/baf/bafs.log
-Submitted job 1 with external jobid '3824377'.
-slurmstepd: error: *** JOB 3824376 ON node407 CANCELLED AT 2021-03-18T22:14:36 ***
+python3 -m hatchet deBAF -N /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_G1.bam -T /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_A1.bam /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_A2.bam /n/fs/ragr-data/datasets/DIPG/010160/bam/SJHGG010160_D1.bam -S Normal SJHGG010160_A1 SJHGG010160_A2 SJHGG010160_D1 -r /n/fs/ragr-data/datasets/ref-genomes/GRCh37_NCBI/GRCh37.p13.fa -j 8 -c 8 -C 300 -L hatchet/SJHGG010160/snps/1.vcf.gz hatchet/SJHGG010160/snps/2.vcf.gz hatchet/SJHGG010160/snps/3.vcf.gz hatchet/SJHGG010160/snps/4.vcf.gz hatchet/SJHGG010160/snps/5.vcf.gz hatchet/SJHGG010160/snps/6.vcf.gz hatchet/SJHGG010160/snps/7.vcf.gz hatchet/SJHGG010160/snps/8.vcf.gz hatchet/SJHGG010160/snps/9.vcf.gz hatchet/SJHGG010160/snps/10.vcf.gz hatchet/SJHGG010160/snps/11.vcf.gz hatchet/SJHGG010160/snps/12.vcf.gz hatchet/SJHGG010160/snps/13.vcf.gz hatchet/SJHGG010160/snps/14.vcf.gz hatchet/SJHGG010160/snps/15.vcf.gz hatchet/SJHGG010160/snps/16.vcf.gz hatchet/SJHGG010160/snps/17.vcf.gz hatchet/SJHGG010160/snps/18.vcf.gz hatchet/SJHGG010160/snps/19.vcf.gz hatchet/SJHGG010160/snps/20.vcf.gz hatchet/SJHGG010160/snps/21.vcf.gz hatchet/SJHGG010160/snps/22.vcf.gz -O hatchet/SJHGG010160/baf/normal.1bed -o hatchet/SJHGG010160/baf/tumor.1bed |& tee hatchet/SJHGG010160/baf/bafs.log
+Submitted job 1 with external jobid '3824431'.
+[Thu Mar 18 23:45:56 2021]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Thu Mar 18 23:45:56 2021]
+localrule all:
+    input: hatchet/SJHGG010160/baf/tumor.1bed, hatchet/SJHGG010160/baf/normal.1bed
+    jobid: 0
+
+[Thu Mar 18 23:45:56 2021]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /n/fs/ragr-research/users/bjarnold/MetastaticEvol/.snakemake/log/2021-03-18T232218.747665.snakemake.log

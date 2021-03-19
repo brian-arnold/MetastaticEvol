@@ -37,7 +37,7 @@ rule hatchet_SNPCaller:
         normal = normal_bam,
         ref = config['reference']
     output: 
-        hatchet_SNPCaller_snps( "{patient}" ),
+        hatchet_SNPCaller_snps( "{patient}" ), # can't use functions as output? at least ones like input based on wilcards
         bafs_log = config['hatchet']['xdir'] + "/{patient}/baf/bafs.log"
         #bafs_log = config['hatchet']['xdir'] + "/{patient}/baf/bafs.log"
         #snps = directory(config['hatchet']['xdir'] + "/{patient}/snps"),
@@ -85,5 +85,5 @@ rule hatchet_deBAF:
         #"cd {input.xdir}\n"
         "python3 -m hatchet deBAF "
         "-N {input.normal} -T {params.tumors_string} -S {params.all_names} -r {input.ref} "
-        "-j {threads} -c {params.minreads} -C {params.maxreads} -L {params.snpdir}"
+        "-j {threads} -c {params.minreads} -C {params.maxreads} -L {input.snps} "
         "-O {output.norm_bed} -o {output.tumor_bed} |& tee {output.bafs_log}"
