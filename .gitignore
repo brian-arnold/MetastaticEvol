@@ -5,3 +5,4 @@ slurm-*.out
 out
 err
 SJHGG*
+00-All.vcf.gz.tbi

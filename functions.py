@@ -42,8 +42,17 @@ def make_all_input_hatchet():
                 if info[1] == "tumor":
                     patients.add( info[0] )
 
+        # use for SNPCaller stop
+        prefix = "chr" if config['hatchet']['chr_notation'] == True else ""
+        for p in patients:
+            paths.append( config['hatchet']['xdir'] + f"/{p}/baf/bafs.log" )
+            #for i in range(1,23):
+            #    paths.append( config['hatchet']['xdir'] + f"{p}/snps/{prefix}{i}.vcf.gz" )
+        """
+        # use for binBAM stop
         for p in patients:
             paths.append( os.path.join( config["hatchet"]["xdir"], p, "rdr/tumor.1bed") )
+        """
         return paths
 
 def make_all_input():
@@ -91,6 +100,31 @@ def get_names_hatchet(wildcards):
     tumors_in = [ get_sample_name(t) for t in tumors[wildcards.patient] ]
     names = ["Normal"] + tumors_in
     return names 
+
+def hatchet_SNPCaller_snps(wildcards):
+    prefix = "chr" if config['hatchet']['chr_notation'] == True else ""
+    vcfs = []
+    for i in range(1,23):
+        vcfs.append( config['hatchet']['xdir'] + f"{wildcards.patient}/snps/{prefix}{i}.vcf.gz" )
+    #vcfs = [f"{prefix}{i}.vcf.gz" for i in range(1,23)]
+    return vcfs
+
+def get_hatchet_list():
+    l = ""
+    if config['hatchet']['ref_vers'] == "hg19":
+        if config['hatchet']['chr_notation'] == True:
+            l = "https://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/GATK/00-All.vcf.gz"
+        elif config['hatchet']['chr_notation'] == False:
+            l = "https://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/00-All.vcf.gz"
+
+    elif config['hatchet']['ref_vers'] == "hg38":
+        if config['hatchet']['chr_notation'] == True:
+            l = "https://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh38p7/VCF/GATK/00-All.vcf.gz"
+        elif config['hatchet']['chr_notation'] == False:
+            l = "https://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh38p7/VCF/00-All.vcf.gz"
+
+    return l
+
 
 ##################
 # GLOBALS
